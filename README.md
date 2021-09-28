@@ -1,8 +1,7 @@
 # conversao-peso
 
-Para efetuar o deploy desta aplicação, proceder os seguintes procedimentos:
+Devido ao meu CI e minha imagem está publica, voce consegue utilizar esse container com docker run ou pull.
 
-- git clone git clone https://github.com/claudi0s0uza/conversao-peso
-- cd conversao-peso/
-- docker image build -t "claudi0s0uza/conversao-peso" .
-- docker container run -d --name conversao-peso --restart=always -p 8081:80 claudi0s0uza/conversao-peso
+
+- docker container run -d --name conversao-peso --restart=always -p 8081:80 ghcr.io/claudi0s0uza/conversao-peso:c6af7fe5eb98f577671cc4919a1240d5b5673d66
+
