@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: pod
+metadata:
+  name: pod-converte-peso
+
+spec:
+  containers:
+    - name: web   
+      image: ghcr.io/claudi0s0uza/conversao-peso
+      ports:
+        - containerPort: 80
