@@ -1,4 +1,4 @@
-name: CI
+name: CI-CD
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
 
 
 jobs:
-  build:
+  CI:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -25,3 +25,24 @@ jobs:
     - run: |
         docker push ghcr.io/claudi0s0uza/conversao-peso:latest
         docker push ghcr.io/claudi0s0uza/conversao-peso:${{ github.sha }}
+
+
+  CD:
+    needs: [CI]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+        
+      - name: Kubernetes set context
+        uses: Azure/k8s-set-context@v1.1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.K8S_CONFIG }}
+      
+      - name: Deploy to Kubernetes cluster
+        uses: Azure/k8s-deploy@v1.3
+        with: 
+          images: ghcr.io/claudi0s0uza/conversao-peso:${{ github.sha }} 
+          manifests: |
+              k8s/deployment.yaml
